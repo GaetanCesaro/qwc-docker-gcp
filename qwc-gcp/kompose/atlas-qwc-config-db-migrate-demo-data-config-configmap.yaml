@@ -30,4 +30,5 @@ metadata:
     use-subpath: "true"
   labels:
     io.kompose.service: qwc-config-db-migrate
-  name: qwc-config-db-migrate-cm1
+  name: atlas-qwc-config-db-migrate-demo-data-config
+

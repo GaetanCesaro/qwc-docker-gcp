@@ -6,4 +6,5 @@ kind: ConfigMap
 metadata:
   labels:
     io.kompose.service: qwc-config-service
-  name: qwc-config-service-cm1
+  name: atlas-qwc-folder-config-out
+

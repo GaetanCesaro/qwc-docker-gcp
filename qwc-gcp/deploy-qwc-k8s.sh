@@ -13,10 +13,10 @@ kubectl apply -f qwc-api-gateway-service.yaml -n default
 
 kubectl apply -f qwc-auth-service-deployment.yaml -n default
 
-kubectl apply -f qwc-config-db-migrate-cm1-configmap.yaml -n default
+kubectl apply -f atlas-qwc-config-db-migrate-demo-data-config-configmap.yaml -n default
 kubectl apply -f qwc-config-db-migrate-deployment.yaml -n default
 
-kubectl apply -f qwc-config-service-cm1-configmap.yaml -n default
+kubectl apply -f atlas-qwc-folder-config-out-configmap.yaml -n default
 kubectl apply -f qwc-config-service-cm3-configmap.yaml -n default
 kubectl apply -f qwc-config-service-cm4-configmap.yaml -n default
 kubectl apply -f qwc-config-service-cm5-configmap.yaml -n default

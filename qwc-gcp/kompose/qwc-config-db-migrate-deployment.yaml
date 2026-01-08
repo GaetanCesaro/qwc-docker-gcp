@@ -31,7 +31,7 @@ spec:
               readOnly: true
               subPath: pg_service.conf
             - mountPath: /tmp/extra-init.d/setup-demo-data-permissions.sh
-              name: qwc-config-db-migrate-cm1
+              name: atlas-qwc-config-db-migrate-demo-data-config
               subPath: setup-demo-data-permissions.sh
       restartPolicy: Always
       volumes:
@@ -45,5 +45,6 @@ spec:
             items:
               - key: setup-demo-data-permissions.sh
                 path: setup-demo-data-permissions.sh
-            name: qwc-config-db-migrate-cm1
-          name: qwc-config-db-migrate-cm1
+            name: atlas-qwc-config-db-migrate-demo-data-config
+          name: atlas-qwc-config-db-migrate-demo-data-config
+

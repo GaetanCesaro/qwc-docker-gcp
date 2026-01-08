@@ -8,5 +8,5 @@ kubectl delete -f qwc-api-gateway-service.yaml
 
 kubectl delete -f qwc-auth-service-deployment.yaml
 
-kubectl delete -f qwc-config-db-migrate-cm1-configmap.yaml
+kubectl delete -f atlas-qwc-config-db-migrate-demo-data-config-configmap.yaml
 kubectl delete -f qwc-config-db-migrate-deployment.yaml

@@ -42,7 +42,7 @@ spec:
           name: qwc-config-service
           volumeMounts:
             - mountPath: /srv/qwc_service/config-out
-              name: qwc-config-service-cm1
+              name: atlas-qwc-folder-config-out
             - mountPath: /data
               name: qwc-config-service-cm3
             - mountPath: /layouts
@@ -57,8 +57,8 @@ spec:
       restartPolicy: Always
       volumes:
         - configMap:
-            name: qwc-config-service-cm1
-          name: qwc-config-service-cm1
+            name: atlas-qwc-folder-config-out
+          name: atlas-qwc-folder-config-out
         - configMap:
             name: qwc-config-service-cm3
           name: qwc-config-service-cm3
@@ -74,3 +74,4 @@ spec:
                 path: pg_service.conf
             name: qatlas-qwc-db-config
           name: qatlas-qwc-db-config
+
