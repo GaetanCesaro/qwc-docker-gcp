@@ -40,7 +40,5 @@ data:
     admin.enableServer=false
 kind: ConfigMap
 metadata:
-  labels:
-    io.kompose.service: qwc-solr
   name: atlas-qwc-solr-config
 
