@@ -13,4 +13,5 @@ metadata:
     use-subpath: "true"
   labels:
     io.kompose.service: qwc-postgis
-  name: qwc-postgis-cm1
+  name: atlas-qwc-postgis-demo-data-config
+

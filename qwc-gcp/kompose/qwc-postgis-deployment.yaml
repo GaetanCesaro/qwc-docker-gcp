@@ -38,7 +38,7 @@ spec:
               protocol: TCP
           volumeMounts:
             - mountPath: /docker-entrypoint-initdb.d/2_setup-demo-data.sh
-              name: qwc-postgis-cm1
+              name: atlas-qwc-postgis-demo-data-config
               subPath: 2_setup-demo-data.sh
       restartPolicy: Always
       volumes:
@@ -46,5 +46,6 @@ spec:
             items:
               - key: setup-demo-data.sh
                 path: 2_setup-demo-data.sh
-            name: qwc-postgis-cm1
-          name: qwc-postgis-cm1
+            name: atlas-qwc-postgis-demo-data-config
+          name: atlas-qwc-postgis-demo-data-config
+

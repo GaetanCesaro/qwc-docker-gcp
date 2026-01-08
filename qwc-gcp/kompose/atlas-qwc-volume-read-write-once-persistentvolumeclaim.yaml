@@ -1,8 +1,6 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  labels:
-    io.kompose.service: atlas-qwc-volume-read-write-once
   name: atlas-qwc-volume-read-write-once
 spec:
   accessModes:
