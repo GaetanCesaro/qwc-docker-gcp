@@ -43,7 +43,7 @@ spec:
               name: atlas-qwc-folder-config
               readOnly: true
             - mountPath: /qwc2/assets
-              name: qwc-map-viewer-cm2
+              name: atlas-qwc-map-viewer-assets-config
               readOnly: true
       restartPolicy: Always
       volumes:
@@ -57,6 +57,6 @@ spec:
             name: atlas-qwc-folder-config
           name: atlas-qwc-folder-config
         - configMap:
-            name: qwc-map-viewer-cm2
-          name: qwc-map-viewer-cm2
+            name: atlas-qwc-map-viewer-assets-config
+          name: atlas-qwc-map-viewer-assets-config
 

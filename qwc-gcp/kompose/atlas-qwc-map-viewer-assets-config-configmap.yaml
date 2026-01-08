@@ -41,4 +41,5 @@ kind: ConfigMap
 metadata:
   labels:
     io.kompose.service: qwc-map-viewer
-  name: qwc-map-viewer-cm2
+  name: atlas-qwc-map-viewer-assets-config
+
