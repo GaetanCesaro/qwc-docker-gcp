@@ -35,9 +35,10 @@ spec:
               protocol: TCP
           volumeMounts:
             - mountPath: /var/solr/data
-              name: qwc-solr-cm1
+              name: atlas-qwc-solr-config
       restartPolicy: Always
       volumes:
         - configMap:
-            name: qwc-solr-cm1
-          name: qwc-solr-cm1
+            name: atlas-qwc-solr-config
+          name: atlas-qwc-solr-config
+

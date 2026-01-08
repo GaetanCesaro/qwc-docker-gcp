@@ -42,4 +42,5 @@ kind: ConfigMap
 metadata:
   labels:
     io.kompose.service: qwc-solr
-  name: qwc-solr-cm1
+  name: atlas-qwc-solr-config
+
