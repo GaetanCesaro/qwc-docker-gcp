@@ -26,5 +26,5 @@ kubectl apply -f atlas-qwc-folder-attachments-configmap.yaml -n default
 kubectl apply -f qwc-data-service-deployment.yaml -n default
 
 kubectl apply -f atlas-qwc-volume-read-write-once-persistentvolumeclaim.yaml -n default
-kubectl apply -f qwc-document-service-cm1-configmap.yaml -n default
+kubectl apply -f atlas-qwc-report-config-configmap.yaml -n default
 kubectl apply -f qwc-document-service-deployment.yaml -n default

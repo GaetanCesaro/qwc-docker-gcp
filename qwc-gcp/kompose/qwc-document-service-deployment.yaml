@@ -40,7 +40,7 @@ spec:
               readOnly: true
               subPath: pg_service.conf
             - mountPath: /reports
-              name: qwc-document-service-cm1
+              name: atlas-qwc-report-config
             - mountPath: /srv/qwc_service/fonts
               name: atlas-qwc-volume-read-write-once
             - mountPath: /srv/qwc_service/config
@@ -55,8 +55,8 @@ spec:
             name: atlas-qwc-db-config
           name: atlas-qwc-db-config
         - configMap:
-            name: qwc-document-service-cm1
-          name: qwc-document-service-cm1
+            name: atlas-qwc-report-config
+          name: atlas-qwc-report-config
         - name: atlas-qwc-volume-read-write-once
           persistentVolumeClaim:
             claimName: atlas-qwc-volume-read-write-once
