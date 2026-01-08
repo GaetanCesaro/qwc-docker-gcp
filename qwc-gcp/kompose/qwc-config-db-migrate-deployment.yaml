@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.37.0 (fb0539e64)
+  labels:
+    io.kompose.service: qwc-config-db-migrate
+  name: qwc-config-db-migrate
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: qwc-config-db-migrate
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.37.0 (fb0539e64)
+      labels:
+        io.kompose.service: qwc-config-db-migrate
+    spec:
+      containers:
+        - image: sourcepole/qwc-base-db-migrate:latest-2025-lts
+          name: qwc-config-db-migrate
+          volumeMounts:
+            - mountPath: /tmp/pg_service.conf
+              name: qwc-config-db-migrate-cm0
+              readOnly: true
+              subPath: pg_service.conf
+            - mountPath: /tmp/extra-init.d/setup-demo-data-permissions.sh
+              name: qwc-config-db-migrate-cm1
+              subPath: setup-demo-data-permissions.sh
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            items:
+              - key: pg_service.conf
+                path: pg_service.conf
+            name: qwc-config-db-migrate-cm0
+          name: qwc-config-db-migrate-cm0
+        - configMap:
+            items:
+              - key: setup-demo-data-permissions.sh
+                path: setup-demo-data-permissions.sh
+            name: qwc-config-db-migrate-cm1
+          name: qwc-config-db-migrate-cm1

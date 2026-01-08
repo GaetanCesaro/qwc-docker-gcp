@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.37.0 (fb0539e64)
+  labels:
+    io.kompose.service: qwc-config-service
+  name: qwc-config-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: qwc-config-service
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.37.0 (fb0539e64)
+      labels:
+        io.kompose.service: qwc-config-service
+    spec:
+      containers:
+        - env:
+            - name: CONFIG_GENERATOR_CONFIG
+              value: '{"timeout": 300}'
+            - name: GENERATE_DYNAMIC_KVRELS
+              value: "1"
+            - name: INPUT_CONFIG_PATH
+              value: /srv/qwc_service/config-in
+            - name: JWT_COOKIE_CSRF_PROTECT
+              value: "True"
+            - name: JWT_COOKIE_SAMESITE
+              value: Strict
+            - name: JWT_SECRET_KEY
+              value: d9532b1f681d5f40afa49f7cfbceaf5f4bf3eb879d12cb12889c30648f714ac148a1c73967edf001b83f6b0c9f705cd8
+            - name: OUTPUT_CONFIG_PATH
+              value: /srv/qwc_service/config-out
+          image: sourcepole/qwc-config-generator:latest-2025-lts
+          name: qwc-config-service
+          volumeMounts:
+            - mountPath: /srv/qwc_service/config-out
+              name: qwc-config-service-cm1
+            - mountPath: /data
+              name: qwc-config-service-cm3
+            - mountPath: /layouts
+              name: qwc-config-service-cm4
+              readOnly: true
+            - mountPath: /reports
+              name: qwc-config-service-cm5
+            - mountPath: /srv/pg_service.conf
+              name: qwc-config-service-cm6
+              readOnly: true
+              subPath: pg_service.conf
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            name: qwc-config-service-cm1
+          name: qwc-config-service-cm1
+        - configMap:
+            name: qwc-config-service-cm3
+          name: qwc-config-service-cm3
+        - configMap:
+            name: qwc-config-service-cm4
+          name: qwc-config-service-cm4
+        - configMap:
+            name: qwc-config-service-cm5
+          name: qwc-config-service-cm5
+        - configMap:
+            items:
+              - key: pg_service.conf
+                path: pg_service.conf
+            name: qwc-config-service-cm6
+          name: qwc-config-service-cm6

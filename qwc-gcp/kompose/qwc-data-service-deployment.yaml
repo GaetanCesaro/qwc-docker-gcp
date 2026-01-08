@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.37.0 (fb0539e64)
+  labels:
+    io.kompose.service: qwc-data-service
+  name: qwc-data-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: qwc-data-service
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.37.0 (fb0539e64)
+      labels:
+        io.kompose.service: qwc-data-service
+    spec:
+      containers:
+        - env:
+            - name: ATTACHMENTS_BASE_DIR
+              value: /attachments
+            - name: JWT_COOKIE_CSRF_PROTECT
+              value: "True"
+            - name: JWT_COOKIE_SAMESITE
+              value: Strict
+            - name: JWT_SECRET_KEY
+              value: d9532b1f681d5f40afa49f7cfbceaf5f4bf3eb879d12cb12889c30648f714ac148a1c73967edf001b83f6b0c9f705cd8
+            - name: MAX_ATTACHMENT_FILE_SIZE
+              value: "1048576"
+            - name: SERVICE_MOUNTPOINT
+              value: /api/v1/data
+          image: sourcepole/qwc-data-service:latest-2025-lts
+          name: qwc-data-service
+          volumeMounts:
+            - mountPath: /srv/qwc_service/config
+              name: qwc-data-service-cm0
+              readOnly: true
+            - mountPath: /attachments
+              name: qwc-data-service-cm1
+            - mountPath: /srv/pg_service.conf
+              name: qwc-data-service-cm2
+              readOnly: true
+              subPath: pg_service.conf
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            name: qwc-data-service-cm0
+          name: qwc-data-service-cm0
+        - configMap:
+            name: qwc-data-service-cm1
+          name: qwc-data-service-cm1
+        - configMap:
+            items:
+              - key: pg_service.conf
+                path: pg_service.conf
+            name: qwc-data-service-cm2
+          name: qwc-data-service-cm2

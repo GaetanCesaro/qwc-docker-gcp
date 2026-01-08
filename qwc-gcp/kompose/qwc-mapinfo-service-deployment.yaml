@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.37.0 (fb0539e64)
+  labels:
+    io.kompose.service: qwc-mapinfo-service
+  name: qwc-mapinfo-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: qwc-mapinfo-service
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.37.0 (fb0539e64)
+      labels:
+        io.kompose.service: qwc-mapinfo-service
+    spec:
+      containers:
+        - env:
+            - name: JWT_COOKIE_CSRF_PROTECT
+              value: "True"
+            - name: JWT_COOKIE_SAMESITE
+              value: Strict
+            - name: JWT_SECRET_KEY
+              value: d9532b1f681d5f40afa49f7cfbceaf5f4bf3eb879d12cb12889c30648f714ac148a1c73967edf001b83f6b0c9f705cd8
+            - name: SERVICE_MOUNTPOINT
+              value: /api/v1/mapinfo
+          image: sourcepole/qwc-mapinfo-service:latest-2025-lts
+          name: qwc-mapinfo-service
+          volumeMounts:
+            - mountPath: /srv/pg_service.conf
+              name: qwc-mapinfo-service-cm0
+              readOnly: true
+              subPath: pg_service.conf
+            - mountPath: /srv/qwc_service/config
+              name: qwc-mapinfo-service-cm1
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            items:
+              - key: pg_service.conf
+                path: pg_service.conf
+            name: qwc-mapinfo-service-cm0
+          name: qwc-mapinfo-service-cm0
+        - configMap:
+            name: qwc-mapinfo-service-cm1
+          name: qwc-mapinfo-service-cm1

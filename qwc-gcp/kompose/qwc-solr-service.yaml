@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.37.0 (fb0539e64)
+  labels:
+    io.kompose.service: qwc-solr
+  name: qwc-solr
+spec:
+  ports:
+    - name: "8983"
+      port: 8983
+      targetPort: 8983
+  selector:
+    io.kompose.service: qwc-solr

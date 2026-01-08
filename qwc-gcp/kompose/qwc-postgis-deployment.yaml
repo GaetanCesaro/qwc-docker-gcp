@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.37.0 (fb0539e64)
+  labels:
+    io.kompose.service: qwc-postgis
+  name: qwc-postgis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: qwc-postgis
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.37.0 (fb0539e64)
+      labels:
+        io.kompose.service: qwc-postgis
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_PASSWORD
+              value: qwc_admin
+          image: sourcepole/qwc-base-db:16
+          livenessProbe:
+            exec:
+              command:
+                - pg_isready -U qwc_admin -d qwc_services
+            periodSeconds: 10
+          name: qwc-postgis
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d/2_setup-demo-data.sh
+              name: qwc-postgis-cm1
+              subPath: 2_setup-demo-data.sh
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            items:
+              - key: setup-demo-data.sh
+                path: 2_setup-demo-data.sh
+            name: qwc-postgis-cm1
+          name: qwc-postgis-cm1

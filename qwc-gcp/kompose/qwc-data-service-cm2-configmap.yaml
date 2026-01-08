@@ -1,0 +1,25 @@
+apiVersion: v1
+data:
+  pg_service.conf: |
+    [qwc_configdb]
+    host=qwc-postgis
+    port=5432
+    dbname=qwc_services
+    user=qwc_admin
+    password=qwc_admin
+    sslmode=disable
+
+    [qwc_geodb]
+    host=qwc-postgis
+    port=5432
+    dbname=qwc_services
+    user=qwc_service_write
+    password=qwc_service_write
+    sslmode=disable
+kind: ConfigMap
+metadata:
+  annotations:
+    use-subpath: "true"
+  labels:
+    io.kompose.service: qwc-data-service
+  name: qwc-data-service-cm2

@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.37.0 (fb0539e64)
+  labels:
+    io.kompose.service: qwc-solr
+  name: qwc-solr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: qwc-solr
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.37.0 (fb0539e64)
+      labels:
+        io.kompose.service: qwc-solr
+    spec:
+      containers:
+        - command:
+            - docker-entrypoint.sh
+            - solr-precreate
+            - gdi
+            - /gdi_conf
+          image: solr:8.11-slim
+          name: qwc-solr
+          ports:
+            - containerPort: 8983
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/solr/data
+              name: qwc-solr-cm1
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            name: qwc-solr-cm1
+          name: qwc-solr-cm1

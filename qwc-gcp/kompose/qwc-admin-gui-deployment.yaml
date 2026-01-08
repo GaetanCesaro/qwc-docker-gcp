@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.37.0 (fb0539e64)
+  labels:
+    io.kompose.service: qwc-admin-gui
+  name: qwc-admin-gui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: qwc-admin-gui
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.37.0 (fb0539e64)
+      labels:
+        io.kompose.service: qwc-admin-gui
+    spec:
+      containers:
+        - env:
+            - name: DEFAULT_LOCALE
+              value: en
+            - name: GROUP_REGISTRATION_ENABLED
+              value: "True"
+            - name: JWT_COOKIE_CSRF_PROTECT
+              value: "False"
+            - name: JWT_COOKIE_SAMESITE
+              value: Strict
+            - name: JWT_SECRET_KEY
+              value: d9532b1f681d5f40afa49f7cfbceaf5f4bf3eb879d12cb12889c30648f714ac148a1c73967edf001b83f6b0c9f705cd8
+            - name: MAIL_DEFAULT_SENDER
+              value: from@example.com
+            - name: MAIL_SUPPRESS_SEND
+              value: "True"
+          image: sourcepole/qwc-admin-gui:latest-2025-lts
+          name: qwc-admin-gui
+          volumeMounts:
+            - mountPath: /srv/pg_service.conf
+              name: atlas-qwc-db-config
+              readOnly: true
+              subPath: pg_service.conf
+            - mountPath: /srv/qwc_service/config
+              name: qwc-admin-gui-cm1
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            items:
+              - key: pg_service.conf
+                path: pg_service.conf
+            name: atlas-qwc-db-config
+          name: atlas-qwc-db-config
+        - configMap:
+            name: qwc-admin-gui-cm1
+          name: qwc-admin-gui-cm1

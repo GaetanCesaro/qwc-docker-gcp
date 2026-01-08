@@ -1,0 +1,44 @@
+apiVersion: v1
+data:
+  catalog.json: |
+    {
+        "catalog": [
+            {
+                "title": "World Cities",
+                "resource": "wms:https://demo.mapserver.org/cgi-bin/wms#cities"
+            },
+            {
+                "title": "EMODnet",
+                "sublayers": [
+                    {
+                        "title": "Lighthouses",
+                        "resource": "wms:https://ows.emodnet-humanactivities.eu/geoserver/emodnet/wms#lighthouses"
+                    },
+                    {
+                        "title": "Main Ports",
+                        "resource": "wms:https://ows.emodnet-humanactivities.eu/geoserver/emodnet/wms#portlocations"
+                    },
+                    {
+                        "title": "Pipelines",
+                        "resource": "wms:https://ows.emodnet-humanactivities.eu/geoserver/emodnet/wms#pipelines"
+                    }
+                ]
+            }
+        ]
+    }
+  help.html: |
+    <div style="padding: 0.5em">
+    <p>
+       <img src="assets/img/logo.svg" width="120" />
+    </p>
+    <p>
+      <a href="https://qwc-services.github.io/" target="_blank">Homepage</a><br/>
+      <a href="https://qwc2.sourcepole.ch/" target="_blank">Demo viewer</a><br/>
+    </p>
+    <p>QWC2 Build $VERSION$</p>
+    </div>
+kind: ConfigMap
+metadata:
+  labels:
+    io.kompose.service: qwc-map-viewer
+  name: qwc-map-viewer-cm2
