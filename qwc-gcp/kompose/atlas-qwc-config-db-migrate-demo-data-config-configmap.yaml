@@ -28,7 +28,5 @@ kind: ConfigMap
 metadata:
   annotations:
     use-subpath: "true"
-  labels:
-    io.kompose.service: qwc-config-db-migrate
   name: atlas-qwc-config-db-migrate-demo-data-config
 

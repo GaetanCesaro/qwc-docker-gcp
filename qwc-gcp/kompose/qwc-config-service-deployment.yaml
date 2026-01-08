@@ -44,7 +44,7 @@ spec:
             - mountPath: /srv/qwc_service/config-out
               name: atlas-qwc-folder-config-out
             - mountPath: /data
-              name: qwc-config-service-cm3
+              name: atlas-qwc-qgis-ressources-config
             - mountPath: /layouts
               name: qwc-config-service-cm4
               readOnly: true
@@ -60,8 +60,8 @@ spec:
             name: atlas-qwc-folder-config-out
           name: atlas-qwc-folder-config-out
         - configMap:
-            name: qwc-config-service-cm3
-          name: qwc-config-service-cm3
+            name: atlas-qwc-qgis-ressources-config
+          name: atlas-qwc-qgis-ressources-config
         - configMap:
             name: qwc-config-service-cm4
           name: qwc-config-service-cm4
