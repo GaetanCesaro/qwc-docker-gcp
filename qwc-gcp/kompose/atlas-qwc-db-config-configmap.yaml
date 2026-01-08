@@ -20,6 +20,5 @@ kind: ConfigMap
 metadata:
   annotations:
     use-subpath: "true"
-  labels:
-    io.kompose.service: qwc-fulltext-search-service
-  name: qwc-fulltext-search-service-cm0
+  name: atlas-qwc-db-config
+

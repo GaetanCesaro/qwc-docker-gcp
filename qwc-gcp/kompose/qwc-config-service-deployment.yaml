@@ -51,7 +51,7 @@ spec:
             - mountPath: /reports
               name: qwc-config-service-cm5
             - mountPath: /srv/pg_service.conf
-              name: qwc-config-service-cm6
+              name: qatlas-qwc-db-config
               readOnly: true
               subPath: pg_service.conf
       restartPolicy: Always
@@ -72,5 +72,5 @@ spec:
             items:
               - key: pg_service.conf
                 path: pg_service.conf
-            name: qwc-config-service-cm6
-          name: qwc-config-service-cm6
+            name: qatlas-qwc-db-config
+          name: qatlas-qwc-db-config

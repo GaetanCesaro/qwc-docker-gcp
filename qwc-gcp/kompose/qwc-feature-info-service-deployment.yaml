@@ -36,7 +36,7 @@ spec:
           name: qwc-feature-info-service
           volumeMounts:
             - mountPath: /srv/pg_service.conf
-              name: qwc-feature-info-service-cm0
+              name: atlas-qwc-db-config
               readOnly: true
               subPath: pg_service.conf
             - mountPath: /srv/qwc_service/config
@@ -48,8 +48,8 @@ spec:
             items:
               - key: pg_service.conf
                 path: pg_service.conf
-            name: qwc-feature-info-service-cm0
-          name: qwc-feature-info-service-cm0
+            name: atlas-qwc-db-config
+          name: atlas-qwc-db-config
         - configMap:
             name: qwc-feature-info-service-cm1
           name: qwc-feature-info-service-cm1

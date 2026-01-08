@@ -41,7 +41,7 @@ spec:
               name: qwc-qgis-server-cm0
               readOnly: true
             - mountPath: /etc/postgresql-common/pg_service.conf
-              name: qwc-qgis-server-cm1
+              name: atlas-qwc-db-config
               readOnly: true
               subPath: pg_service.conf
             - mountPath: /usr/share/qgis/python/plugins/print_templates
@@ -68,8 +68,8 @@ spec:
             items:
               - key: pg_service.conf
                 path: pg_service.conf
-            name: qwc-qgis-server-cm1
-          name: qwc-qgis-server-cm1
+            name: atlas-qwc-db-config
+          name: atlas-qwc-db-config
         - name: qwc-qgis-server-claim2
           persistentVolumeClaim:
             claimName: qwc-qgis-server-claim2

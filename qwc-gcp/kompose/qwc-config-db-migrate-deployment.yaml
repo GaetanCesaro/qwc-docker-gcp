@@ -27,7 +27,7 @@ spec:
           name: qwc-config-db-migrate
           volumeMounts:
             - mountPath: /tmp/pg_service.conf
-              name: qwc-config-db-migrate-cm0
+              name: atlas-qwc-db-config
               readOnly: true
               subPath: pg_service.conf
             - mountPath: /tmp/extra-init.d/setup-demo-data-permissions.sh
@@ -39,8 +39,8 @@ spec:
             items:
               - key: pg_service.conf
                 path: pg_service.conf
-            name: qwc-config-db-migrate-cm0
-          name: qwc-config-db-migrate-cm0
+            name: atlas-qwc-db-config
+          name: atlas-qwc-db-config
         - configMap:
             items:
               - key: setup-demo-data-permissions.sh

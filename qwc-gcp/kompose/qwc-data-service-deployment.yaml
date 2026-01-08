@@ -45,7 +45,7 @@ spec:
             - mountPath: /attachments
               name: qwc-data-service-cm1
             - mountPath: /srv/pg_service.conf
-              name: qwc-data-service-cm2
+              name: atlas-qwc-db-config
               readOnly: true
               subPath: pg_service.conf
       restartPolicy: Always
@@ -60,5 +60,5 @@ spec:
             items:
               - key: pg_service.conf
                 path: pg_service.conf
-            name: qwc-data-service-cm2
-          name: qwc-data-service-cm2
+            name: atlas-qwc-db-config
+          name: atlas-qwc-db-config

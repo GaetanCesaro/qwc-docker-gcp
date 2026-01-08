@@ -36,7 +36,7 @@ spec:
           name: qwc-map-viewer
           volumeMounts:
             - mountPath: /srv/pg_service.conf
-              name: qwc-map-viewer-cm0
+              name: atlas-qwc-db-config
               readOnly: true
               subPath: pg_service.conf
             - mountPath: /srv/qwc_service/config
@@ -51,8 +51,8 @@ spec:
             items:
               - key: pg_service.conf
                 path: pg_service.conf
-            name: qwc-map-viewer-cm0
-          name: qwc-map-viewer-cm0
+            name: atlas-qwc-db-config
+          name: atlas-qwc-db-config
         - configMap:
             name: qwc-map-viewer-cm1
           name: qwc-map-viewer-cm1
