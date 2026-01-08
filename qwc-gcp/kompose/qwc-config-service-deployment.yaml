@@ -46,7 +46,7 @@ spec:
             - mountPath: /data
               name: atlas-qwc-qgis-ressources-config
             - mountPath: /layouts
-              name: qwc-config-service-cm4
+              name: atlas-qwc-print-layouts-config
               readOnly: true
             - mountPath: /reports
               name: qwc-config-service-cm5
@@ -63,8 +63,8 @@ spec:
             name: atlas-qwc-qgis-ressources-config
           name: atlas-qwc-qgis-ressources-config
         - configMap:
-            name: qwc-config-service-cm4
-          name: qwc-config-service-cm4
+            name: atlas-qwc-print-layouts-config
+          name: atlas-qwc-print-layouts-config
         - configMap:
             name: qwc-config-service-cm5
           name: qwc-config-service-cm5

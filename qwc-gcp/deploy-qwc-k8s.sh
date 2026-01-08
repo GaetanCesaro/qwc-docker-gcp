@@ -18,7 +18,7 @@ kubectl apply -f qwc-config-db-migrate-deployment.yaml -n default
 
 kubectl apply -f atlas-qwc-folder-config-out-configmap.yaml -n default
 kubectl apply -f atlas-qwc-qgis-ressources-config-configmap.yaml -n default
-kubectl apply -f qwc-config-service-cm4-configmap.yaml -n default
+kubectl apply -f atlas-qwc-print-layouts-config-configmap.yaml -n default
 kubectl apply -f qwc-config-service-cm5-configmap.yaml -n default
 kubectl apply -f qwc-config-service-deployment.yaml -n default
 

@@ -882,4 +882,5 @@ kind: ConfigMap
 metadata:
   labels:
     io.kompose.service: qwc-config-service
-  name: qwc-config-service-cm4
+  name: atlas-qwc-print-layouts-config
+
