@@ -43,7 +43,7 @@ spec:
               name: atlas-qwc-folder-config
               readOnly: true
             - mountPath: /attachments
-              name: qwc-data-service-cm1
+              name: atlas-qwc-folder-attachments
             - mountPath: /srv/pg_service.conf
               name: atlas-qwc-db-config
               readOnly: true
@@ -54,8 +54,8 @@ spec:
             name: atlas-qwc-folder-config
           name: atlas-qwc-folder-config
         - configMap:
-            name: qwc-data-service-cm1
-          name: qwc-data-service-cm1
+            name: atlas-qwc-folder-attachments
+          name: atlas-qwc-folder-attachments
         - configMap:
             items:
               - key: pg_service.conf
