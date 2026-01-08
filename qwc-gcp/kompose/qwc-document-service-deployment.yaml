@@ -44,7 +44,7 @@ spec:
             - mountPath: /srv/qwc_service/fonts
               name: qwc-document-service-claim2
             - mountPath: /srv/qwc_service/config
-              name: qwc-document-service-cm3
+              name: atlas-qwc-folder-config
               readOnly: true
       restartPolicy: Always
       volumes:
@@ -61,5 +61,6 @@ spec:
           persistentVolumeClaim:
             claimName: qwc-document-service-claim2
         - configMap:
-            name: qwc-document-service-cm3
-          name: qwc-document-service-cm3
+            name: atlas-qwc-folder-config
+          name: atlas-qwc-folder-config
+

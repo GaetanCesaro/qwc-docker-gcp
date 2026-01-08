@@ -1,9 +1,0 @@
-apiVersion: v1
-data:
-  README: |
-    all files in this directory get created/overwritten by the config generator
-kind: ConfigMap
-metadata:
-  labels:
-    io.kompose.service: qwc-print-service
-  name: qwc-print-service-cm0

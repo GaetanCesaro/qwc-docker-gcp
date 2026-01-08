@@ -36,10 +36,11 @@ spec:
           name: qwc-legend-service
           volumeMounts:
             - mountPath: /srv/qwc_service/config
-              name: qwc-legend-service-cm0
+              name: atlas-qwc-folder-config
               readOnly: true
       restartPolicy: Always
       volumes:
         - configMap:
-            name: qwc-legend-service-cm0
-          name: qwc-legend-service-cm0
+            name: atlas-qwc-folder-config
+          name: atlas-qwc-folder-config
+

@@ -5,5 +5,6 @@ data:
 kind: ConfigMap
 metadata:
   labels:
-    io.kompose.service: qwc-elevation-service
-  name: qwc-elevation-service-cm0
+    io.kompose.service: qwc-admin-gui
+  name: atlas-qwc-folder-config
+

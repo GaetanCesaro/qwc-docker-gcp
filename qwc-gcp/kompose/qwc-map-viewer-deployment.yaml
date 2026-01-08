@@ -40,7 +40,7 @@ spec:
               readOnly: true
               subPath: pg_service.conf
             - mountPath: /srv/qwc_service/config
-              name: qwc-map-viewer-cm1
+              name: atlas-qwc-folder-config
               readOnly: true
             - mountPath: /qwc2/assets
               name: qwc-map-viewer-cm2
@@ -54,8 +54,9 @@ spec:
             name: atlas-qwc-db-config
           name: atlas-qwc-db-config
         - configMap:
-            name: qwc-map-viewer-cm1
-          name: qwc-map-viewer-cm1
+            name: atlas-qwc-folder-config
+          name: atlas-qwc-folder-config
         - configMap:
             name: qwc-map-viewer-cm2
           name: qwc-map-viewer-cm2
+

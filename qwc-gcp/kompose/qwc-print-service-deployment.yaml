@@ -36,10 +36,11 @@ spec:
           name: qwc-print-service
           volumeMounts:
             - mountPath: /srv/qwc_service/config
-              name: qwc-print-service-cm0
+              name: atlas-qwc-folder-config
               readOnly: true
       restartPolicy: Always
       volumes:
         - configMap:
-            name: qwc-print-service-cm0
-          name: qwc-print-service-cm0
+            name: atlas-qwc-folder-config
+          name: atlas-qwc-folder-config
+

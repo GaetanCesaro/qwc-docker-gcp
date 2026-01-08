@@ -40,7 +40,7 @@ spec:
               readOnly: true
               subPath: pg_service.conf
             - mountPath: /srv/qwc_service/config
-              name: qwc-auth-service-cm1
+              name: atlas-qwc-folder-config
               readOnly: true
       restartPolicy: Always
       volumes:
@@ -51,5 +51,6 @@ spec:
             name: atlas-qwc-db-config
           name: atlas-qwc-db-config
         - configMap:
-            name: qwc-auth-service-cm1
-          name: qwc-auth-service-cm1
+            name: atlas-qwc-folder-config
+          name: atlas-qwc-folder-config
+

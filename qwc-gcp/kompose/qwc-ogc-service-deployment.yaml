@@ -36,10 +36,11 @@ spec:
           name: qwc-ogc-service
           volumeMounts:
             - mountPath: /srv/qwc_service/config
-              name: qwc-ogc-service-cm0
+              name: atlas-qwc-folder-config
               readOnly: true
       restartPolicy: Always
       volumes:
         - configMap:
-            name: qwc-ogc-service-cm0
-          name: qwc-ogc-service-cm0
+            name: atlas-qwc-folder-config
+          name: atlas-qwc-folder-config
+

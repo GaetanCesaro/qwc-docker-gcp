@@ -36,10 +36,11 @@ spec:
           name: qwc-elevation-service
           volumeMounts:
             - mountPath: /srv/qwc_service/config
-              name: qwc-elevation-service-cm0
+              name: atlas-qwc-folder-config
               readOnly: true
       restartPolicy: Always
       volumes:
         - configMap:
-            name: qwc-elevation-service-cm0
+            name: atlas-qwc-folder-config
           name: qwc-elevation-service-cm0
+
