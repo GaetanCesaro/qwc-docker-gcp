@@ -544,7 +544,5 @@ data:
     </jasperReport>
 kind: ConfigMap
 metadata:
-  labels:
-    io.kompose.service: qwc-config-service
   name: atlas-qwc-report-config
 

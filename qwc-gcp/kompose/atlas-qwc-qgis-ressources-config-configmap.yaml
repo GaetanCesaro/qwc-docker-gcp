@@ -40590,7 +40590,5 @@ data:
     </qlr>
 kind: ConfigMap
 metadata:
-  labels:
-    io.kompose.service: qwc-config-service
   name: atlas-qwc-qgis-ressources-config
 

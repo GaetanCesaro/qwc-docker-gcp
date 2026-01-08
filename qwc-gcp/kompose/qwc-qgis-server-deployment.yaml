@@ -45,16 +45,16 @@ spec:
               readOnly: true
               subPath: pg_service.conf
             - mountPath: /usr/share/qgis/python/plugins/print_templates
-              name: qwc-qgis-server-claim2
+              name: atlas-qwc-volume-read-only-many
               readOnly: true
             - mountPath: /usr/share/qgis/python/plugins/split_categorized
-              name: qwc-qgis-server-claim3
+              name: atlas-qwc-volume-read-only-many
               readOnly: true
             - mountPath: /usr/share/qgis/python/plugins/filter_geom
-              name: qwc-qgis-server-claim4
+              name: atlas-qwc-volume-read-only-many
               readOnly: true
             - mountPath: /usr/share/qgis/python/plugins/clear_capabilities
-              name: qwc-qgis-server-claim5
+              name: atlas-qwc-volume-read-only-many
               readOnly: true
             - mountPath: /layouts
               name: qwc-qgis-server-cm6
@@ -70,22 +70,23 @@ spec:
                 path: pg_service.conf
             name: atlas-qwc-db-config
           name: atlas-qwc-db-config
-        - name: qwc-qgis-server-claim2
+        - name: atlas-qwc-volume-read-only-many
           persistentVolumeClaim:
-            claimName: qwc-qgis-server-claim2
+            claimName: atlas-qwc-volume-read-only-many
             readOnly: true
-        - name: qwc-qgis-server-claim3
+        - name: atlas-qwc-volume-read-only-many
           persistentVolumeClaim:
-            claimName: qwc-qgis-server-claim3
+            claimName: atlas-qwc-volume-read-only-many
             readOnly: true
-        - name: qwc-qgis-server-claim4
+        - name: atlas-qwc-volume-read-only-many
           persistentVolumeClaim:
-            claimName: qwc-qgis-server-claim4
+            claimName: atlas-qwc-volume-read-only-many
             readOnly: true
-        - name: qwc-qgis-server-claim5
+        - name: atlas-qwc-volume-read-only-many
           persistentVolumeClaim:
-            claimName: qwc-qgis-server-claim5
+            claimName: atlas-qwc-volume-read-only-many
             readOnly: true
         - configMap:
             name: qwc-qgis-server-cm6
           name: qwc-qgis-server-cm6
+

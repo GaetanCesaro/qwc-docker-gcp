@@ -42,7 +42,7 @@ spec:
             - mountPath: /reports
               name: qwc-document-service-cm1
             - mountPath: /srv/qwc_service/fonts
-              name: qwc-document-service-claim2
+              name: atlas-qwc-volume-read-write-once
             - mountPath: /srv/qwc_service/config
               name: atlas-qwc-folder-config
               readOnly: true
@@ -57,9 +57,9 @@ spec:
         - configMap:
             name: qwc-document-service-cm1
           name: qwc-document-service-cm1
-        - name: qwc-document-service-claim2
+        - name: atlas-qwc-volume-read-write-once
           persistentVolumeClaim:
-            claimName: qwc-document-service-claim2
+            claimName: atlas-qwc-volume-read-write-once
         - configMap:
             name: atlas-qwc-folder-config
           name: atlas-qwc-folder-config

@@ -2,11 +2,12 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
-    io.kompose.service: qwc-qgis-server-claim5
-  name: qwc-qgis-server-claim5
+    io.kompose.service: atlas-qwc-volume-read-only-many
+  name: atlas-qwc-volume-read-only-many
 spec:
   accessModes:
     - ReadOnlyMany
   resources:
     requests:
       storage: 100Mi
+
