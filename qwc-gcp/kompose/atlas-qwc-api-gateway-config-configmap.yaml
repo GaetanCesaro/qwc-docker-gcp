@@ -90,4 +90,5 @@ metadata:
     use-subpath: "true"
   labels:
     io.kompose.service: qwc-api-gateway
-  name: qwc-api-gateway-cm0
+  name: atlas-qwc-api-gateway-config
+

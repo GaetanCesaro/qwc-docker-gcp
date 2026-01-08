@@ -4,7 +4,5 @@ data:
     all files in this directory get created/overwritten by the config generator
 kind: ConfigMap
 metadata:
-  labels:
-    io.kompose.service: qwc-admin-gui
   name: atlas-qwc-folder-config
 

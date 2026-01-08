@@ -7,7 +7,7 @@ kubectl apply -f atlas-qwc-db-config-configmap.yaml -n default
 
 kubectl apply -f qwc-admin-gui-deployment.yaml -n default
 
-kubectl apply -f qwc-api-gateway-cm0-configmap.yaml -n default
+kubectl apply -f atlas-qwc-api-gateway-config-configmap.yaml -n default
 kubectl apply -f qwc-api-gateway-deployment.yaml -n default
 kubectl apply -f qwc-api-gateway-service.yaml -n default
 
