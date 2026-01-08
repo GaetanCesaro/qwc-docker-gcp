@@ -49,7 +49,7 @@ spec:
               name: atlas-qwc-print-layouts-config
               readOnly: true
             - mountPath: /reports
-              name: qwc-config-service-cm5
+              name: atlas-qwc-report-config
             - mountPath: /srv/pg_service.conf
               name: qatlas-qwc-db-config
               readOnly: true
@@ -66,8 +66,8 @@ spec:
             name: atlas-qwc-print-layouts-config
           name: atlas-qwc-print-layouts-config
         - configMap:
-            name: qwc-config-service-cm5
-          name: qwc-config-service-cm5
+            name: atlas-qwc-report-config
+          name: atlas-qwc-report-config
         - configMap:
             items:
               - key: pg_service.conf

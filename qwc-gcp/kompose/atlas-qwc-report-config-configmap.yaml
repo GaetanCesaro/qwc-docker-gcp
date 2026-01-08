@@ -546,4 +546,5 @@ kind: ConfigMap
 metadata:
   labels:
     io.kompose.service: qwc-config-service
-  name: qwc-config-service-cm5
+  name: atlas-qwc-report-config
+
