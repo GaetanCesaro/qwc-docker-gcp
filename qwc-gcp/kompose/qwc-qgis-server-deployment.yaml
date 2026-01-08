@@ -38,7 +38,7 @@ spec:
           name: qwc-qgis-server
           volumeMounts:
             - mountPath: /data
-              name: qwc-qgis-server-cm0
+              name: atlas-qwc-qgis-ressources-config
               readOnly: true
             - mountPath: /etc/postgresql-common/pg_service.conf
               name: atlas-qwc-db-config
@@ -57,13 +57,13 @@ spec:
               name: atlas-qwc-volume-read-only-many
               readOnly: true
             - mountPath: /layouts
-              name: qwc-qgis-server-cm6
+              name: atlas-qwc-print-layouts-config
               readOnly: true
       restartPolicy: Always
       volumes:
         - configMap:
-            name: qwc-qgis-server-cm0
-          name: qwc-qgis-server-cm0
+            name: atlas-qwc-qgis-ressources-config
+          name: atlas-qwc-qgis-ressources-config
         - configMap:
             items:
               - key: pg_service.conf
@@ -87,6 +87,6 @@ spec:
             claimName: atlas-qwc-volume-read-only-many
             readOnly: true
         - configMap:
-            name: qwc-qgis-server-cm6
-          name: qwc-qgis-server-cm6
+            name: atlas-qwc-print-layouts-config
+          name: atlas-qwc-print-layouts-config
 
