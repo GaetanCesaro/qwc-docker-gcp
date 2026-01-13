@@ -11,10 +11,11 @@ volumes/config/__capabilities_cache
 volumes/demo-data/sql/sensitive
 
 # Terraform
-/qwc-gcp/terraform/.terraform/
-/qwc-gcp/terraform/.terraform.lock.hcl
-/qwc-gcp/terraform/terraform.tfstate
-/qwc-gcp/terraform/terraform.tfstate.backup
+qwc-gcp/terraform/.terraform/
+qwc-gcp/terraform/.terraform.lock.hcl
+qwc-gcp/terraform/terraform.tfstate
+qwc-gcp/terraform/terraform.tfstate.backup
+qwc-gcp/vef-qgis-gcp
 
 # OS
 .DS_Store
