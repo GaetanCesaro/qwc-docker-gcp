@@ -1,9 +1,9 @@
 s/QWC_ADMIN_PASSWORD/qwc_admin/g
-s/PROJECT_ID/fr-ist-isteau-atlas-dev/g
+s/PROJECT_ID/atlas-qwc-poc/g
 s/DATABASE_ZONE/europe-west1/g
-s/DATABASE_INSTANCE/hnh/g
+s/DATABASE_INSTANCE/eauphrate/g
 s/DATABASE_PORT/5432/g
 s/EXTERNAL_DATABASE_PORT/5432/g
 s/INTERNAL_DATABASE_PORT/5432/g
-s/POSTGRES_USER/vef_admin/g
-s/POSTGRES_PASSWORD/vef_admin_password_in_secret/g
+s/POSTGRES_USER/postgres/g
+s/POSTGRES_PASSWORD/postgres/g

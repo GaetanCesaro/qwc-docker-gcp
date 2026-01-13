@@ -17,6 +17,9 @@ qwc-gcp/terraform/terraform.tfstate
 qwc-gcp/terraform/terraform.tfstate.backup
 qwc-gcp/vef-qgis-gcp
 
+# Service account keys
+*-service-account-key.json
+
 # OS
 .DS_Store
 Thumbs.db

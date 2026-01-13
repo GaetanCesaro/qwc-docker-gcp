@@ -22,6 +22,7 @@ To deploy the infrastructure manually, go to the infrastructure folder and apply
 
 ```
 cd terraform
+gcloud config set project atlas-qwc-poc
 terraform init -backend-config=poc/backend.conf -backend=true
 terraform plan -var-file=poc/variables.tfvars
 terraform apply -var-file=poc/variables.tfvars
