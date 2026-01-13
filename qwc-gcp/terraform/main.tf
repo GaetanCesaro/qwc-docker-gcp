@@ -13,7 +13,7 @@ terraform {
       version = "1.25.0"
     }
   }
-  required_version = ">= 0.14.0"
+  required_version = ">= 1.14.0"
   backend "gcs" {}
 }
 

@@ -10,4 +10,6 @@ ENVIRONMENT=$1
 
 set -e
 
+gcloud config set project atlas-qwc-$ENVIRONMENT
+
 cat docker-compose-gcp.yml | sed -f run_"$ENVIRONMENT".sed | docker compose -f - up

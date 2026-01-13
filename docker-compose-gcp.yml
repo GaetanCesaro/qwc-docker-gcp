@@ -2,8 +2,8 @@
 
 x-qwc-service-variables: &qwc-service-variables
   JWT_SECRET_KEY: $JWT_SECRET_KEY
-  JWT_COOKIE_CSRF_PROTECT: 'True'
-  JWT_COOKIE_SAMESITE: 'Strict'
+  JWT_COOKIE_CSRF_PROTECT: "True"
+  JWT_COOKIE_SAMESITE: "Strict"
   # Uncomment if the application is exclusively run over HTTPS to ensure cookies are only sent with HTTPS requests
   # JWT_COOKIE_SECURE: 'True'
   # Set these to override the UID/GID which runs uwsgi. Useful to ensure uwsgi runs under the same user/group
@@ -14,16 +14,48 @@ x-qwc-service-variables: &qwc-service-variables
   # TENANT_HEADER: Tenant
 
 services:
-
-   cloud-sql-proxy:
+  cloud-sql-proxy:
     image: gcr.io/cloudsql-docker/gce-proxy:1.11
     # Port: MySQL (3306), PostgreSQL (5432)
     command: /cloud_sql_proxy -instances=PROJECT_ID:DATABASE_ZONE:DATABASE_INSTANCE=tcp:0.0.0.0:DATABASE_PORT
     volumes:
-    # this mounts your application default credential on the container, preventing the
-    # 'invalid json file "/config": google: read JWT from JSON credentials: 'type' field is "authorized_user" (expected "service_account")'
-    # error if you point to the actual credential file directly
-    - ~/.config:/root/.config
+      # this mounts your application default credential on the container, preventing the
+      # 'invalid json file "/config": google: read JWT from JSON credentials: 'type' field is "authorized_user" (expected "service_account")'
+      # error if you point to the actual credential file directly
+      - ~/.config:/root/.config
     ports:
-    - 5432:5432
-  
+      - 5432:5432
+
+  # Service client PostgreSQL pour se connecter à Cloud SQL via le proxy
+  postgres-client:
+    image: postgres:13
+    depends_on:
+      - cloud-sql-proxy
+    environment:
+      - PGSERVICEFILE=/etc/pg_service.conf
+      - PGSERVICE=vef_atlas
+      - PGUSER=POSTGRES_USER
+      - PGPASSWORD=POSTGRES_PASSWORD
+    volumes:
+      - ./pg_service.gcp.conf:/etc/pg_service.conf:ro
+    command: >
+      sh -c "
+      echo 'Attente du proxy Cloud SQL...' &&
+      sleep 5 &&
+      echo '=== Liste des schémas ===' &&
+      psql service=vef_atlas -c '\\dn' &&
+      echo '' &&
+      echo '=== Vérification du schéma vef ===' &&
+      if psql service=vef_atlas -t -c \"SELECT schema_name FROM information_schema.schemata WHERE schema_name='vef'\" | grep -q vef; then
+        echo 'Schéma vef trouvé, liste des tables :' &&
+        psql service=vef_atlas -c '\\dt vef.*';
+      else
+        echo 'Schéma vef non trouvé';
+      fi &&
+      echo '' &&
+      echo '=== Fin de l analyse ===' &&
+      tail -f /dev/null
+      "
+    networks:
+      - default
+

@@ -1,6 +1,6 @@
-resource "google_secret_manager_secret" "pgpass-qgis-cluster" {
+resource "google_secret_manager_secret" "postgres-password" {
   project = var.project-name
-  secret_id = "pgpass-qgis-cluster"
+  secret_id = "postgres-password"
 
   replication {
     user_managed {
@@ -11,8 +11,7 @@ resource "google_secret_manager_secret" "pgpass-qgis-cluster" {
   }
 }
 
-resource "google_secret_manager_secret_version" "pgpass-qgis-cluster-version" {
-  depends_on = [random_password.pgpass-qgis-cluster]
-  secret = google_secret_manager_secret.pgpass-qgis-cluster.id
+resource "google_secret_manager_secret_version" "postgres-password-version" {
+  secret = google_secret_manager_secret.postgres-password.id
   secret_data = var.postgres-password
 }
