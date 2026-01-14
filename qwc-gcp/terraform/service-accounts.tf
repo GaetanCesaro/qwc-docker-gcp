@@ -9,3 +9,15 @@ resource "google_project_iam_member" "cloud_sql_proxy_sql_client" {
   role    = "roles/cloudsql.client"
   member  = "serviceAccount:${google_service_account.cloud_sql_proxy.email}"
 }
+
+# Add a terraform service account granted with Cloud Scheduler Admin role
+resource "google_service_account" "terraform_sa" {
+  account_id   = "terraform-sa"
+  display_name = "Service Account for Terraform"
+}
+
+resource "google_project_iam_member" "terraform_sa_scheduler_admin" {
+  project = var.project-name
+  role    = "roles/cloudscheduler.admin"
+  member  = "serviceAccount:${google_service_account.terraform_sa.email}"
+}

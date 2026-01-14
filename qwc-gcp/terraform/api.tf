@@ -4,9 +4,14 @@ resource "google_project_service" "secret" {
   disable_dependent_services = false
 }
 
-# Add Cloud SQL Admin API 
 resource "google_project_service" "sqladmin" {
   project = var.project-name
   service = "sqladmin.googleapis.com"
+  disable_dependent_services = false
+}
+
+resource "google_project_service" "cloudscheduler" {
+  project = var.project-name
+  service = "cloudscheduler.googleapis.com"
   disable_dependent_services = false
 }
