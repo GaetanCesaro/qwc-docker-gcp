@@ -1,7 +1,7 @@
 resource "google_cloud_scheduler_job" "sql_stop_instance" {
   project = ""
   name             = "sql-stop-instance"
-  schedule         = "0 19 * * 1-5"
+  schedule         = "0 20 * * 1-5"
   description      = "Stop SQL Instance"
   time_zone        = "Europe/Paris"
   region           = var.region-serverless

@@ -28,34 +28,35 @@ services:
 
   # Service client PostgreSQL pour se connecter à Cloud SQL via le proxy
   postgres-client:
-    image: postgres:15
+    image: postgres:16-alpine
     depends_on:
       - cloud-sql-proxy
-    environment:
-      - PGSERVICEFILE=/etc/pg_service.conf
-      - PGSERVICE=qwc_configdb
-      - PGUSER=POSTGRES_USER
-      - PGPASSWORD=POSTGRES_PASSWORD
+    env_file: "postgres-client.env"
     volumes:
       - ./pg_service.gcp.conf:/etc/pg_service.conf:ro
-    command: >
-      sh -c "
-      echo 'Attente du proxy Cloud SQL...' &&
-      sleep 5 &&
-      echo '=== Liste des schémas ===' &&
-      psql service=qwc_configdb -c '\\dn' &&
-      echo '' &&
-      echo '=== Vérification du schéma postgres ===' &&
-      if psql service=qwc_configdb -t -c \"SELECT schema_name FROM information_schema.schemata WHERE schema_name='postgres'\" | grep -q postgres; then
-        echo 'Schéma postgres trouvé, liste des tables :' &&
-        psql service=qwc_configdb -c '\\dt postgres.*';
-      else
-        echo 'Schéma postgres non trouvé';
-      fi &&
-      echo '' &&
-      echo '=== Fin de l analyse ===' &&
-      tail -f /dev/null
-      "
+      - ./volumes/demo-data/sql:/docker-entrypoint-initdb.d/sql
+      #- ./volumes/demo-data/check-database.sh:/docker-entrypoint-initdb.d/1_check-database.sh
+      - ./volumes/demo-data/setup-roles-and-db.sh:/docker-entrypoint-initdb.d/2_setup-roles-and-db.sh
+      - ./volumes/demo-data/setup-passwords.sh:/docker-entrypoint-initdb.d/3_setup-passwords.sh
+      - ./volumes/demo-data/setup-demo-data.sh:/docker-entrypoint-initdb.d/4_setup-demo-data.sh
+    networks:
+      - default
+
+  # Service de migration de la base de données QWC Config DB
+  qwc-config-db-migrate:
+    image: sourcepole/qwc-base-db-migrate:latest
+    depends_on:
+      - cloud-sql-proxy
+      - postgres-client
+    env_file: "postgres-client.env"
+    environment:
+      PGSERVICEFILE: "/tmp/pg_service.conf"
+      PGSERVICE: "qwc_configdb"
+      ALEMBIC_VERSION: "head"
+      QWC_CONFIG_SCHEMA: "qwc_config"
+    volumes:
+      - ./pg_service.gcp.conf:/tmp/pg_service.conf:ro
+      - ./volumes/demo-data/setup-demo-data-permissions.sh:/docker-entrypoint-initdb.d/1_setup-demo-data-permissions.sh
     networks:
       - default
 

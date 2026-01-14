@@ -10,14 +10,14 @@ else
   echo "ERROR: neither curl nor wget is available in the container"
   exit 127
 fi
-pg_restore -U "$POSTGRES_USER" -d qwc_services -1 qwc_geodb.backup
+pg_restore -U "$POSTGRES_USER" -d $POSTGRES_DATABASE -1 qwc_geodb.backup
 
 echo "Running custom DDL scripts..."
 for f in /docker-entrypoint-initdb.d/sql/ddl/*.sql; do
-  [ -f "$f" ] && echo "Running $f" && psql -U postgres -d qwc_services -v ON_ERROR_STOP=1 -f "$f"
+  [ -f "$f" ] && echo "Running $f" && psql -U postgres -d $POSTGRES_DATABASE -v ON_ERROR_STOP=1 -f "$f"
 done
 
 echo "Running sensitive data scripts..."
 for f in /docker-entrypoint-initdb.d/sql/sensitive/*.sql; do
-  [ -f "$f" ] && echo "Running $f" && psql -U postgres -d qwc_services -v ON_ERROR_STOP=1 -f "$f"
+  [ -f "$f" ] && echo "Running $f" && psql -U postgres -d $POSTGRES_DATABASE -v ON_ERROR_STOP=1 -f "$f"
 done
