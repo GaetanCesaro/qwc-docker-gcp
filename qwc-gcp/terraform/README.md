@@ -32,3 +32,7 @@ terraform apply -var-file=$ENVIRONMENT/variables.tfvars
 ## Manual configuration
 - All IAM configuration (users, service accounts habilitations, etc...) has actually been set manually
 - IAP consent screes has been set manually
+- Manualy run cloud-sql-proxy if you need to connect to the DB without running docker-compose-gcp : 
+```
+cloud_sql_proxy -instances=atlas-qwc-poc:europe-west1:eauphrate=tcp:5432
+```

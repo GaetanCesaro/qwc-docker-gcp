@@ -15,3 +15,9 @@ resource "google_project_service" "cloudscheduler" {
   service = "cloudscheduler.googleapis.com"
   disable_dependent_services = false
 }
+
+resource "google_project_service" "run" {
+  project                    = var.project-name
+  service                    = "run.googleapis.com"
+  disable_dependent_services = false
+}

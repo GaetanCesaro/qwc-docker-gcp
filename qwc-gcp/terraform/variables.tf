@@ -10,11 +10,7 @@ variable "region-serverless" {
   default = "europe-west1"
 }
 
-variable "project-name" {
-}
-
-variable "app_env" {
-}
+variable "project-name" {}
 
 variable "project_env" {}
 
@@ -23,7 +19,7 @@ variable "location" {
 }
 
 variable "storage-class" {
-  default = "REGIONAL"
+  default = "STANDARD"
 }
 
 variable "postgres-password" {
