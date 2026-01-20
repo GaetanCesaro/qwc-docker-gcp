@@ -49,6 +49,11 @@ resource "google_storage_bucket_iam_member" "print_layouts_viewer" {
   role   = "roles/storage.objectViewer"
   member = "serviceAccount:${google_service_account.qwc_qgis_server.email}"
 }
+resource "google_storage_bucket_iam_member" "qgis_server_plugins_viewer" {
+  bucket = google_storage_bucket.qgis_server_plugins.name
+  role   = "roles/storage.objectViewer"
+  member = "serviceAccount:${google_service_account.qwc_qgis_server.email}"
+}
 resource "google_secret_manager_secret_iam_member" "qgis_server_secret_accessor" {
   secret_id = google_secret_manager_secret.pg_service_conf.secret_id
   role      = "roles/secretmanager.secretAccessor"

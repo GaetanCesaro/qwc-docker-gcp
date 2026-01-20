@@ -21,3 +21,15 @@ resource "google_project_service" "run" {
   service                    = "run.googleapis.com"
   disable_dependent_services = false
 }
+
+resource "google_project_service" "compute" {
+  project                    = var.project-name
+  service                    = "compute.googleapis.com"
+  disable_dependent_services = false
+}
+
+resource "google_project_service" "cloudbuild" {
+  project                    = var.project-name
+  service                    = "cloudbuild.googleapis.com"
+  disable_dependent_services = false
+}

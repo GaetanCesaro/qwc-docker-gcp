@@ -75,8 +75,8 @@ terraform output qgis_server_url
 gcloud run services logs read qwc-qgis-server-poc --region=europe-west1 --limit=50
 
 # Tester le service
-curl "$(terraform output -raw qgis_server_url)/?SERVICE=WMS&REQUEST=GetCapabilities"
-curl "https://qwc-qgis-server-poc-gbvamcurxq-ew.a.run.app/?SERVICE=WMS&REQUEST=GetCapabilities"
+curl "$(terraform output -raw qgis_server_ip)/?SERVICE=WMS&REQUEST=GetCapabilities"
+curl "https://35.195.127.107/?SERVICE=WMS&REQUEST=GetCapabilities"
 ```
 
 ## Architecture déployée

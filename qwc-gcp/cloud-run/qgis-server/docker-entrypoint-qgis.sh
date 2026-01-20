@@ -20,6 +20,7 @@ echo "Using GCS project: $GCS_PROJECT_NAME"
 # Bucket names
 QGIS_RESOURCES_BUCKET="${GCS_QGIS_RESOURCES_BUCKET:-${GCS_PROJECT_NAME}-qgis-resources}"
 PRINT_LAYOUTS_BUCKET="${GCS_PRINT_LAYOUTS_BUCKET:-${GCS_PROJECT_NAME}-print-layouts}"
+QGIS_PLUGINS_BUCKET="${GCS_QGIS_SERVER_PLUGINS_BUCKET:-${GCS_PROJECT_NAME}-qgis-server-plugins}"
 
 echo "Mounting Cloud Storage buckets..."
 
@@ -45,7 +46,32 @@ if [ -n "$PRINT_LAYOUTS_BUCKET" ]; then
     fi
 fi
 
+# Mount QGIS plugins bucket
+if [ -n "$QGIS_PLUGINS_BUCKET" ]; then
+    echo "Mounting QGIS plugins from gs://$QGIS_PLUGINS_BUCKET to /usr/share/qgis/python/plugins"
+    mkdir -p /usr/share/qgis/python/plugins
+    gcsfuse --implicit-dirs --file-mode=444 --dir-mode=555 "$QGIS_PLUGINS_BUCKET" /usr/share/qgis/python/plugins
+    if [ $? -eq 0 ]; then
+        echo "Successfully mounted QGIS plugins"
+    else
+        echo "WARNING: Failed to mount QGIS plugins bucket"
+    fi
+fi
+
 echo "Cloud Storage buckets mounted successfully !"
+
+# Fetch pg_service.conf from Secret Manager if needed
+if [ -n "$PG_SERVICE_SECRET" ] && [ -n "$GCS_PROJECT_NAME" ]; then
+    echo "Fetching pg_service.conf from Secret Manager..."
+    mkdir -p /etc/postgresql-common
+    gcloud secrets versions access latest --secret="$PG_SERVICE_SECRET" --project="$GCS_PROJECT_NAME" > /etc/postgresql-common/pg_service.conf
+    if [ $? -eq 0 ]; then
+        echo "Successfully fetched pg_service.conf"
+        chmod 644 /etc/postgresql-common/pg_service.conf
+    else
+        echo "WARNING: Failed to fetch pg_service.conf from Secret Manager"
+    fi
+fi
 
 # List mounted directories for verification
 echo "Contents of /data:"

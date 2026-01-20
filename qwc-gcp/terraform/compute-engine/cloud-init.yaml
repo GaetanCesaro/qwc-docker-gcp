@@ -1,0 +1,42 @@
+#cloud-config
+
+write_files:
+  - path: /etc/systemd/system/qwc-qgis-server.service
+    permissions: "0644"
+    content: |
+      [Unit]
+      Description=QWC QGIS Server Container with GCS FUSE
+      After=docker.service network-online.target
+      Requires=docker.service
+      Wants=network-online.target
+
+      [Service]
+      Environment="HOME=/root"
+      ExecStartPre=/usr/bin/docker pull gcr.io/${project_name}/qwc-qgis-server:${project_env}
+      ExecStart=/usr/bin/docker run --rm \
+        --name qwc-qgis-server \
+        --privileged \
+        --device /dev/fuse \
+        --cap-add SYS_ADMIN \
+        -p 80:80 \
+        -e GCS_PROJECT_NAME=${project_name} \
+        -e GCS_QGIS_RESOURCES_BUCKET=${qgis_resources_bucket} \
+        -e GCS_PRINT_LAYOUTS_BUCKET=${print_layouts_bucket} \
+        -e GCS_QGIS_SERVER_PLUGINS_BUCKET=${qgis_server_plugins_bucket} \
+        -e PG_SERVICE_SECRET=${pg_service_secret} \
+        -e FCGID_EXTRA_ENV=PRINT_LAYOUT_DIR \
+        -e PRINT_LAYOUT_DIR=/layouts \
+        gcr.io/${project_name}/qwc-qgis-server:${project_env}
+      ExecStop=/usr/bin/docker stop qwc-qgis-server
+      Restart=always
+      RestartSec=10
+
+      [Install]
+      WantedBy=multi-user.target
+
+runcmd:
+  # Enable and start service
+  - systemctl daemon-reload
+  - systemctl enable qwc-qgis-server.service
+  - systemctl start qwc-qgis-server.service
+
