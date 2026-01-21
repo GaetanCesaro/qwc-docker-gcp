@@ -15,6 +15,9 @@ qwc-gcp/terraform/.terraform/
 qwc-gcp/terraform/.terraform.lock.hcl
 qwc-gcp/terraform/terraform.tfstate
 qwc-gcp/terraform/terraform.tfstate.backup
+qwc-gcp/terraform/terraform.tfvars
+qwc-gcp/terraform/tfplan
+qwc-gcp/terraform/*.tfplan
 qwc-gcp/vef-qgis-gcp
 
 # Service account keys

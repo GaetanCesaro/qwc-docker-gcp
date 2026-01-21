@@ -156,3 +156,219 @@ output "qgis_server_url" {
   value       = google_cloud_run_v2_service.qgis_server.uri
   description = "URL of the QWC QGIS Server on Cloud Run"
 }
+
+# Cloud Run service for qwc-config-service
+resource "google_cloud_run_v2_service" "config_service" {
+  name                = "qwc-config-service-${var.project_env}"
+  location            = var.region-serverless
+  project             = var.project-name
+  deletion_protection = false
+
+  template {
+    service_account = google_service_account.qwc_config_service.email
+
+    # Cloud SQL connection
+    volumes {
+      name = "cloudsql"
+      cloud_sql_instance {
+        instances = [google_sql_database_instance.instance.connection_name]
+      }
+    }
+
+    # Mount pg_service.conf from Secret Manager
+    volumes {
+      name = "pg-service"
+      secret {
+        secret = google_secret_manager_secret.pg_service_conf.secret_id
+        items {
+          version = "latest"
+          path    = "pg_service.conf"
+        }
+      }
+    }
+
+    # Mount JWT secret key from Secret Manager
+    volumes {
+      name = "jwt-secret"
+      secret {
+        secret = google_secret_manager_secret.jwt_secret_key.secret_id
+        items {
+          version = "latest"
+          path    = "jwt_secret_key"
+        }
+      }
+    }
+
+    containers {
+      # Image personnalisée avec Cloud Storage FUSE support
+      # Build and push using: cd qwc-gcp/cloud-run/qwc-config-service && ./build-config-service.sh <project-id> <env>
+      image = "gcr.io/${var.project-name}/qwc-config-service:${var.project_env}"
+
+      # Environment variables
+      env {
+        name  = "SERVICE_MOUNTPOINT"
+        value = "/api/v1/config"
+      }
+
+      env {
+        name  = "INPUT_CONFIG_PATH"
+        value = "/srv/qwc_service/config-in"
+      }
+
+      env {
+        name  = "OUTPUT_CONFIG_PATH"
+        value = "/srv/qwc_service/config-out"
+      }
+
+      env {
+        name  = "GENERATE_DYNAMIC_KVRELS"
+        value = "1"
+      }
+
+      env {
+        name  = "JWT_COOKIE_CSRF_PROTECT"
+        value = "True"
+      }
+
+      env {
+        name  = "JWT_COOKIE_SAMESITE"
+        value = "Strict"
+      }
+
+      # JWT_SECRET_KEY from secret file
+      env {
+        name = "JWT_SECRET_KEY"
+        value_source {
+          secret_key_ref {
+            secret  = google_secret_manager_secret.jwt_secret_key.secret_id
+            version = "latest"
+          }
+        }
+      }
+
+      # GCS buckets configuration for Cloud Storage FUSE
+      env {
+        name  = "GCS_PROJECT_NAME"
+        value = var.project-name
+      }
+
+      env {
+        name  = "GCS_CONFIG_IN_BUCKET"
+        value = google_storage_bucket.config_in.name
+      }
+
+      env {
+        name  = "GCS_CONFIG_BUCKET"
+        value = google_storage_bucket.config.name
+      }
+
+      env {
+        name  = "GCS_QWC2_BUCKET"
+        value = google_storage_bucket.qwc2.name
+      }
+
+      env {
+        name  = "GCS_QGIS_RESOURCES_BUCKET"
+        value = google_storage_bucket.qgis_resources.name
+      }
+
+      env {
+        name  = "GCS_PRINT_LAYOUTS_BUCKET"
+        value = google_storage_bucket.print_layouts.name
+      }
+
+      env {
+        name  = "GCS_REPORTS_BUCKET"
+        value = google_storage_bucket.reports.name
+      }
+
+      # Mount Cloud SQL socket
+      volume_mounts {
+        name       = "cloudsql"
+        mount_path = "/cloudsql"
+      }
+
+      # Mount pg_service.conf
+      volume_mounts {
+        name       = "pg-service"
+        mount_path = "/srv"
+      }
+
+      # Resources
+      resources {
+        limits = {
+          cpu    = "2"
+          memory = "2Gi"
+        }
+        cpu_idle          = true
+        startup_cpu_boost = true
+      }
+
+      # Startup probe
+      startup_probe {
+        http_get {
+          path = "/ready"
+          port = 9090
+        }
+        initial_delay_seconds = 10
+        timeout_seconds       = 3
+        period_seconds        = 10
+        failure_threshold     = 3
+      }
+
+      # Liveness probe
+      liveness_probe {
+        http_get {
+          path = "/ready"
+          port = 9090
+        }
+        initial_delay_seconds = 30
+        timeout_seconds       = 3
+        period_seconds        = 30
+        failure_threshold     = 3
+      }
+    }
+
+    # Scaling configuration
+    scaling {
+      min_instance_count = 0
+      max_instance_count = 5
+    }
+
+    # Timeout
+    timeout = "300s"
+  }
+
+  traffic {
+    type    = "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST"
+    percent = 100
+  }
+
+  depends_on = [
+    google_project_service.run,
+    google_sql_database_instance.instance,
+    google_storage_bucket.config_in,
+    google_storage_bucket.config,
+    google_storage_bucket.qwc2,
+    google_storage_bucket.qgis_resources,
+    google_storage_bucket.print_layouts,
+    google_storage_bucket.reports
+  ]
+}
+
+# IAM policy to allow access (adjust based on your needs)
+resource "google_cloud_run_v2_service_iam_member" "config_service_invoker" {
+  name     = google_cloud_run_v2_service.config_service.name
+  location = google_cloud_run_v2_service.config_service.location
+  project  = var.project-name
+  role     = "roles/run.invoker"
+  # Pour un accès interne uniquement, utilisez un service account spécifique
+  # Pour un accès public (admin), utilisez "allUsers"
+  member = "allUsers"
+}
+
+# Output the service URL
+output "config_service_url" {
+  value       = google_cloud_run_v2_service.config_service.uri
+  description = "URL of the QWC Config Service on Cloud Run"
+}

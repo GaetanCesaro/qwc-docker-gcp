@@ -33,3 +33,39 @@ resource "google_storage_bucket" "qgis_server_plugins" {
 
   uniform_bucket_level_access = true
 }
+
+# Cloud Storage bucket for config-in (input configuration)
+resource "google_storage_bucket" "config_in" {
+  name          = "${var.project-name}-config-in"
+  location      = var.location
+  storage_class = var.storage-class
+
+  uniform_bucket_level_access = true
+}
+
+# Cloud Storage bucket for config (generated configuration)
+resource "google_storage_bucket" "config" {
+  name          = "${var.project-name}-config"
+  location      = var.location
+  storage_class = var.storage-class
+
+  uniform_bucket_level_access = true
+}
+
+# Cloud Storage bucket for QWC2 assets
+resource "google_storage_bucket" "qwc2" {
+  name          = "${var.project-name}-qwc2"
+  location      = var.location
+  storage_class = var.storage-class
+
+  uniform_bucket_level_access = true
+}
+
+# Cloud Storage bucket for reports
+resource "google_storage_bucket" "reports" {
+  name          = "${var.project-name}-reports"
+  location      = var.location
+  storage_class = var.storage-class
+
+  uniform_bucket_level_access = true
+}

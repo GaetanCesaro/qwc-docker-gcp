@@ -34,3 +34,30 @@ resource "google_secret_manager_secret_version" "pg_service_conf" {
   # Replace with the actual content of your pg_service.conf
   secret_data = file("${path.module}/../../pg_service.gcp.conf")
 }
+
+# Secret for JWT_SECRET_KEY
+resource "google_secret_manager_secret" "jwt_secret_key" {
+  secret_id = "jwt-secret-key-${var.project_env}"
+  project   = var.project-name
+
+  replication {
+    user_managed {
+      replicas {
+        location = "europe-west1"
+      }
+    }
+  }
+
+  depends_on = [google_project_service.secret]
+}
+
+resource "google_secret_manager_secret_version" "jwt_secret_key" {
+  secret = google_secret_manager_secret.jwt_secret_key.id
+  # Lire depuis le fichier .env à la racine du projet
+  # Supprimer JWT_SECRET_KEY= et les guillemets
+  secret_data = trimspace(replace(replace(file("${path.module}/../../.env"), "JWT_SECRET_KEY=", ""), "\"", ""))
+
+  lifecycle {
+    ignore_changes = [secret_data]
+  }
+}
