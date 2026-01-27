@@ -35,6 +35,7 @@ resource "google_secret_manager_secret_version" "pg_service_conf" {
   secret_data = file("${path.module}/../../pg_service.gcp.conf")
 }
 
+/*
 # Secret for JWT_SECRET_KEY
 resource "google_secret_manager_secret" "jwt_secret_key" {
   secret_id = "jwt-secret-key-${var.project_env}"
@@ -61,3 +62,4 @@ resource "google_secret_manager_secret_version" "jwt_secret_key" {
     ignore_changes = [secret_data]
   }
 }
+*/

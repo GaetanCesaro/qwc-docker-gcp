@@ -27,6 +27,7 @@ resource "google_project_iam_member" "terraform_sa_editor" {
   member  = "serviceAccount:${google_service_account.terraform_sa.email}"
 }
 
+/*
 # qwc-qgis-server SA
 resource "google_service_account" "qwc_qgis_server" {
   account_id   = "qwc-qgis-server-${var.project_env}"
@@ -59,7 +60,9 @@ resource "google_secret_manager_secret_iam_member" "qgis_server_secret_accessor"
   role      = "roles/secretmanager.secretAccessor"
   member    = "serviceAccount:${google_service_account.qwc_qgis_server.email}"
 }
+*/
 
+/*
 # qwc-config-service SA
 resource "google_service_account" "qwc_config_service" {
   account_id   = "qwc-config-service-${var.project_env}"
@@ -109,8 +112,4 @@ resource "google_secret_manager_secret_iam_member" "config_service_pg_service_ac
   role      = "roles/secretmanager.secretAccessor"
   member    = "serviceAccount:${google_service_account.qwc_config_service.email}"
 }
-resource "google_secret_manager_secret_iam_member" "config_service_jwt_accessor" {
-  secret_id = google_secret_manager_secret.jwt_secret_key.secret_id
-  role      = "roles/secretmanager.secretAccessor"
-  member    = "serviceAccount:${google_service_account.qwc_config_service.email}"
-}
+*/

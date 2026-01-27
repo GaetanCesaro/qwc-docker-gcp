@@ -1,3 +1,4 @@
+/*
 # Compute Engine instance for QWC QGIS Server
 resource "google_compute_instance" "qwc_qgis_server" {
   name         = "qwc-qgis-server-${var.project_env}"
@@ -77,3 +78,4 @@ output "qgis_server_internal_ip" {
   value       = google_compute_instance.qwc_qgis_server.network_interface[0].network_ip
   description = "Internal IP address of the QGIS server"
 }
+*/

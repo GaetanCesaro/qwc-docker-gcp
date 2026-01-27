@@ -1,0 +1,10 @@
+# Fichiers générés
+generated/
+
+# Secrets locaux
+*.secret
+*.key
+
+# Kubeconfig
+kubeconfig
+*.kubeconfig

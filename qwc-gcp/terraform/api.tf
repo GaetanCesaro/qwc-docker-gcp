@@ -33,3 +33,9 @@ resource "google_project_service" "cloudbuild" {
   service                    = "cloudbuild.googleapis.com"
   disable_dependent_services = false
 }
+
+resource "google_project_service" "gke" {
+  project                    = var.project-name
+  service                    = "container.googleapis.com"
+  disable_dependent_services = false
+}

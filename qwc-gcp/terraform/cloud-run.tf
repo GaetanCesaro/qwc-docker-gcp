@@ -1,8 +1,10 @@
+/*
 # Cloud Run service for qwc-qgis-server
 resource "google_cloud_run_v2_service" "qgis_server" {
   name     = "qwc-qgis-server-${var.project_env}"
   location = var.region-serverless
   project  = var.project-name
+  deletion_protection = false
 
   template {
     service_account = google_service_account.qwc_qgis_server.email
@@ -372,3 +374,4 @@ output "config_service_url" {
   value       = google_cloud_run_v2_service.config_service.uri
   description = "URL of the QWC Config Service on Cloud Run"
 }
+*/

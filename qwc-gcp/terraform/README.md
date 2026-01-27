@@ -20,7 +20,7 @@ sudo apt update && sudo apt-get install terraform
 ## Every deployments
 To deploy the infrastructure manually, go to the infrastructure folder and apply the following command line with the good ENV :
 
-```
+```bash
 cd terraform
 export ENVIRONMENT=poc
 gcloud config set project atlas-qwc-$ENVIRONMENT

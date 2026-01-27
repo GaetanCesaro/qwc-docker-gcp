@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: qwc-services
+  labels:
+    name: qwc-services
+
