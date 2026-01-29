@@ -26,7 +26,7 @@ services:
     ports:
       - 5432:5432
 
-  # Service client PostgreSQL pour se connecter à Cloud SQL via le proxy
+  # Client PostgreSQL : connection à Cloud SQL via le proxy, initialisation de la DB
   postgres-client:
     image: postgres:16-alpine
     depends_on:
@@ -42,12 +42,14 @@ services:
     networks:
       - default
 
-  # Service de migration de la base de données QWC Config DB
+  # Service de migration de la base de données QWC Config DB, via Cloud SQL proxy
   qwc-config-db-migrate:
     image: sourcepole/qwc-base-db-migrate:latest
     depends_on:
-      - cloud-sql-proxy
-      - postgres-client
+      cloud-sql-proxy
+      postgres-client:
+        condition: service_completed_successfully
+
     env_file: "postgres-client.env"
     environment:
       PGSERVICEFILE: "/tmp/pg_service.conf"
