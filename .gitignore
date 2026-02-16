@@ -16,6 +16,9 @@ volumes/demo-data/sql/sensitive
 /qwc-gcp/terraform/terraform.tfstate
 /qwc-gcp/terraform/terraform.tfstate.backup
 
+# GCP credentials
+*-service-account-key.json
+
 # OS
 .DS_Store
 Thumbs.db

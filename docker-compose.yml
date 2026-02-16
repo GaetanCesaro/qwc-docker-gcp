@@ -68,8 +68,8 @@ services:
       - qwc-qgs-init  
 
   qwc-config-service:
-    image: sourcepole/qwc-config-generator:latest-2025-lts
-    # image: sourcepole/qwc-config-generator:v2025.11.18
+    # image: sourcepole/qwc-config-generator:latest-2025-lts
+    image: sourcepole/qwc-config-generator:v2025.11.18
     environment:
       <<: *qwc-service-variables
       INPUT_CONFIG_PATH: '/srv/qwc_service/config-in'
